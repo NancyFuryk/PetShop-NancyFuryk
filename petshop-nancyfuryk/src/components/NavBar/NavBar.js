@@ -1,12 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import CartWidget from "../CartWidget/CartWidget";
 import './NavBar.scss'
 
 
 export default function NavBar() {
     return (
       <div className="navBar">
-        <div>
+        <div className='navBarContainer'>
             <li><a href='#'><img src="logoPata.png"/></a></li>
             <li><a href='#'>Perros</a></li>
             <li><a href='#'>Gatos</a></li>
@@ -15,6 +14,7 @@ export default function NavBar() {
             <li><a href='#'>Roedores</a></li>
             <li><a href='#'>Ofertas</a></li>
         </div>
+          <CartWidget/>  
       </div>
     );
   }
