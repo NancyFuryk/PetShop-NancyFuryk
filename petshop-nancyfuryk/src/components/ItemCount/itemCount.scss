@@ -1,0 +1,42 @@
+.addCart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 30px;
+    div{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        button{
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: thistle;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        p{
+            font-size: 18px;
+            font-family: sans-serif;
+        }
+    }
+    button{
+        width: 62%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-family: sans-serif;
+        font-size: 15px;
+        margin-top: 7px;
+        background: white;
+        border: 3px solid thistle;
+        border-radius: 3px;
+    }
+}

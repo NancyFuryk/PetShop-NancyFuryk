@@ -1,5 +1,14 @@
-export default function ItemListContainer(props) {
+import ItemCount from "../ItemCount/ItemCount";
+
+export default function ItemListContainer() {
+
+  const handleOnAdd = (quantity) => {
+    console.log(`se agrego ${quantity}`)
+    alert(`${quantity} productos agregados al carrito`)
+
+  }
+
     return (
-      <h1>{props.greeting}</h1>
+      <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>
     );
   }
