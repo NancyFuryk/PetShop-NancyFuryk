@@ -1,0 +1,34 @@
+ul.itemList {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+    .cardProduct {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        img{
+            width: 200px;
+            height: auto;
+            margin: 0 auto;
+        }
+        p.title {
+            font-size: 20px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        p.desc{
+            font-size: 15px;
+            font-family: sans-serif;
+            text-align: center;
+            width: 50%;
+            margin: 0 auto;
+        }
+        p.price{
+            font-size: 20px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+    }
+}

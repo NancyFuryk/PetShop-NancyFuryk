@@ -1,14 +1,24 @@
-import ItemCount from "../ItemCount/ItemCount";
+import {useState, useEffect } from "react";
+import ItemList from "../ItemList/ItemList"
+import { getProducts } from '../../asyncmock'
 
 export default function ItemListContainer() {
+  const [products, setProducts] = useState([]);
 
-  const handleOnAdd = (quantity) => {
-    console.log(`se agrego ${quantity}`)
-    alert(`${quantity} productos agregados al carrito`)
+  useEffect(() => {
+    getProducts().then(prods => {
+      setProducts(prods)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
 
-  }
+ 
 
     return (
-      <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>
+      <>
+        <ItemList  products={products}/>
+       
+      </>
     );
   }
