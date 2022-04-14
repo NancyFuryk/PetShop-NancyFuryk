@@ -1,8 +1,11 @@
-ul.itemDetail li {
-    width: 70%;
+.itemDetail li {
     display: flex;
-    justify-content: space-evenly;
-    margin: 0 auto;
+    justify-content: center;
+    margin-top: 50px;
+    img{
+        width: 500px;
+        height: auto;
+    }
     .containerInfo {
         margin-top: 50px;
         p{
