@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "../../cartContext/cartContext";
 import './itemCount.scss'
 
-export default function ItemCount({onAdd, stock, initial}) {
+export default function ItemCount({stock, initial}) {
+
+    let {addItem} = useContext(CartContext);
+    let {clear} = useContext(CartContext);
 
     //count = variable, la llamo para mostrar el valor
     //setCount = funcion, la llamo para cambiar el estado
@@ -22,7 +26,11 @@ export default function ItemCount({onAdd, stock, initial}) {
           <p>{count}</p>
           <button onClick={handleIncrement}>+</button>
         </div> 
-          <button onClick={() => onAdd(count)}>Agregar al carrito</button>
+          <button onClick={() => addItem(alert(`Seleccionaste ${count} productos`))}>Agregar al carrito</button>
+          <button onClick={() => clear()}>Borrar carrito</button>
       </div>
     );
   }
+
+
+  
