@@ -1,25 +1,42 @@
-import React, { createContext, Fragment, useState } from 'react'
+import { createContext, useState } from 'react'
 
-export const CartContext = createContext();
+const CartContext = createContext()
 
-export default function ContextProvider({children}) {
-    const [carrito, setCarrito] = useState([{id: 1, name: "example"}]);
-
-    const addItem = (products) => [...carrito, products];
-
-    const removeItem = (id) => {
-        setCarrito([carrito.filter((name) => name.id !== id)]);
+export const CartContextProvider = ({ children }) => {
+    const [cart, setCart] = useState([]);
+    
+   // const addItem = (products) => [...cart, products];
+    console.log(cart)
+    /*const removeItem = (id) => {
+        setCart([cart.filter((name) => name.id !== id)]);
     }
 
-    const clear = () => {
-        setCarrito([]);
+    /*const clear = () => {
+        setCart([]);
+    }*/
+
+    const addItem = (productToAdd) => {
+        setCart([...cart, productToAdd])
+    }
+    const getQuantity = () => {
+        let count = 0
+        cart.forEach(prod => {
+            count += prod.quantity
+        })
+        return count
     }
 
     return(
-        <Fragment>
-            <CartContext.Provider value={{carrito, setCarrito, addItem, removeItem, clear}}>
+       
+            <CartContext.Provider value={{
+                cart,
+                addItem,
+                getQuantity
+            }}>
                 {children}
             </CartContext.Provider>
-        </Fragment>
+      
     );
 }
+
+export default CartContext;

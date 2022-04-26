@@ -1,15 +1,14 @@
 
 import { useContext } from 'react';
-import { CartContext } from '../../cartContext/cartContext';
+import CartContext from '../../cartContext/CartContext'
 import './CartWidget.scss'
 
 export default function CartWidget() {
-  let {carrito} = useContext(CartContext);
+  let { getQuantity } = useContext(CartContext);
     return (
       <div className="CartWidget">
-        <p></p>
-          <img src='miniCart.png'/>
-          {carrito.length}
+        <img src='miniCart.png'/>
+          { getQuantity() }
       </div>
     );
   }
