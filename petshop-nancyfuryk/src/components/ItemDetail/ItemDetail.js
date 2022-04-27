@@ -8,7 +8,7 @@ import CartContext from '../../cartContext/CartContext'
 export default function ItemDetail({ id, title, pictureUrl, description, price, stock}) {
     const [quantity, setQuantity] = useState(0);
 
-    const { addItem } = useContext(CartContext)
+    const { addItem, isInCart, clearCart } = useContext(CartContext)
 
     const handleOnAdd = (count) => {
         
@@ -31,7 +31,8 @@ export default function ItemDetail({ id, title, pictureUrl, description, price, 
                     <p className="title">{title}</p>
                     <p className="desc">{description}</p>
                     <p className="price">$ {price}</p>
-                   {quantity > 0 ? <Link to='/cart'>Ir al carrito</Link> : <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>}
+                   { isInCart(id) > 0 ?<div> <Link to='/cart'>Ir al carrito</Link> <button  onClick={() => clearCart()}>borrar</button></div>: <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>}
+                   
                 </div>
             </li>      
         </div>
