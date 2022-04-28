@@ -60,7 +60,7 @@ export const getCategories = () => {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve(categories)
-        }, 100)
+        }, 1000)
     })
 }
 
