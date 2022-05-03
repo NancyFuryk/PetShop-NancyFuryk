@@ -28,7 +28,12 @@ export default function NavBar() {
              <li><a href='#'>Ofertas</a></li>*/}
              { categories.map(cat => <NavLink key={cat.id} to={`/category/${cat.id}`}>{cat.description}</NavLink>)}
         </div>
-          <CartWidget/>  
+       
+          
+         <Link to="/cart">
+           <CartWidget/>
+         </Link>
+        
       </div>
     );
   }

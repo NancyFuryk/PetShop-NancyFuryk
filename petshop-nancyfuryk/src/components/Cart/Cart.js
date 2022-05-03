@@ -1,11 +1,41 @@
 import { useContext } from "react";
-import  CartContext  from "../../cartContext/CartContext";
-
+import { Link } from "react-router-dom";
+import  cartContext  from "../../cartContext/CartContext";
+import './cart.scss'
 
 export default function Cart() {
-    let {carrito} = useContext(CartContext);
+    let {subtotal, cart, clearCart } = useContext(cartContext);
 
+    if(cart.length === 0){
+       return <div><p>No hay productos en el carrito</p> <Link to="/">Ir a agregar productos</Link></div>
+    }
     return (
-        <div className="h-screen">Cant {carrito.length}</div>
+        <>
+            <h1>Mi Carrito</h1>
+            <div className="cartContainer">
+                {
+                    cart.map(prod => <div className="cart" key={prod.id}>
+                                        <img src={prod.pictureUrl}/>
+                                        <div className="datailCart">
+                                            <p className="title">{prod.title}</p>
+                                            <p>${prod.price}</p>
+                                            <div className="quantity">
+                                                <p>Unidades: {prod.quantity}</p>
+                                            </div>
+                                        </div>
+                                       <div className="subtotal">
+                                            <p>Subtotal: ${prod.price * prod.quantity}</p>
+                                       </div>
+                                       <div className="eliminar" onClick={() => clearCart(prod.id)}>Eliminar</div> 
+                                    </div>)
+                }
+                <div className="total">
+                    <p>Total: ${subtotal()}</p>
+                </div> 
+                <div className="terminarCompra">
+                    <button>Finalizar Compra</button>
+                </div>
+            </div>
+        </>
     );
 }
