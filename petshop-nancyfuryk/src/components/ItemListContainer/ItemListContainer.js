@@ -1,4 +1,4 @@
-import {useState, useEffect, cloneElement } from "react";
+import {useState, useEffect} from "react";
 import ItemList from "../ItemList/ItemList";
 //import { getProducts } from '../../asyncmock';
 import { getDocs, collection, query, where } from 'firebase/firestore'

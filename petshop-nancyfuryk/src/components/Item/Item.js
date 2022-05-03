@@ -17,7 +17,7 @@ export default function Item({ title, pictureUrl, description, price, id}) {
     setQuantity(count)
 
     const productObj = {
-        id, title, price
+        id, title, price, pictureUrl
     }
 
     addItem( {...productObj, quantity: count})
