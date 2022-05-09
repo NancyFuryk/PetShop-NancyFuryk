@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import ItemCount from "../ItemCount/ItemCount";
 import { useState, useContext } from 'react';
-import CartContext from '../../cartContext/CartContext'
+import CartContext from '../../cartContextProvider/CartContextProvider'
 import './item.scss'
 
 export default function Item({ title, pictureUrl, description, price, id}) {
@@ -13,7 +13,6 @@ export default function Item({ title, pictureUrl, description, price, id}) {
 
   const handleOnAdd = (count) => {
         
-    alert(`${count} productos agregados al carrito`)
     setQuantity(count)
 
     const productObj = {

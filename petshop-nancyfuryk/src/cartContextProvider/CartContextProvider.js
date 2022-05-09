@@ -9,11 +9,11 @@ export const CartContextProvider = ({ children }) => {
     console.log(cart)
     /*const removeItem = (id) => {
         setCart([cart.filter((name) => name.id !== id)]);
-    }
-
-    /*const clear = () => {
-        setCart([]);
     }*/
+
+    const clear = () => {
+        setCart([]);
+    }
 
     const addItem = (productToAdd) => {
         setCart([...cart, productToAdd])
@@ -48,7 +48,8 @@ export const CartContextProvider = ({ children }) => {
                 getQuantity,
                 isInCart,
                 clearCart,
-                subtotal
+                subtotal,
+                clear
             }}>
                 {children}
             </CartContext.Provider>
