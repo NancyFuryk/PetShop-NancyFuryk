@@ -1,6 +1,6 @@
 
 import { useContext } from 'react';
-import CartContext from '../../cartContext/CartContext'
+import CartContext from '../../cartContextProvider/CartContextProvider'
 import './CartWidget.scss'
 
 export default function CartWidget() {
