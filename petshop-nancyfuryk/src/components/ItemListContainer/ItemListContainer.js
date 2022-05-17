@@ -5,11 +5,18 @@ import { getDocs, collection, query, where } from 'firebase/firestore'
 import { useParams } from "react-router-dom";
 import { firestoreDb } from "../../services/firebase/idex";
 import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 
 export default function ItemListContainer() {
   const [products, setProducts] = useState([]);
 
   const { categoryId } = useParams();
+
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+    `;
 
   useEffect(() => {
     
@@ -28,7 +35,7 @@ export default function ItemListContainer() {
   }, [categoryId])
 
  if(products.length === 0){
-   return <ClipLoader color={'#a242e2'} size={100}/>
+   return <ClipLoader color={'#a242e2'} size={100} css={override}/>
  }
 
     return (

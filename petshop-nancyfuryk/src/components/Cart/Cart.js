@@ -4,13 +4,22 @@ import  cartContext  from "../../cartContextProvider/CartContextProvider";
 import { firestoreDb } from "../../services/firebase/idex";
 import { getDocs, writeBatch, query, where, collection, documentId, addDoc } from "firebase/firestore";
 import './cart.scss'
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
+
 
 
 export default function Cart() {
+    const override = css`
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+    `;
+
     const [loading, setLoading] = useState(false)
     const [buy, setBuy] = useState(false)
     const [orden, setOrden] = useState('')
-    let {subtotal, cart, clearCart } = useContext(cartContext);
+    let {subtotal, cart, clearCart, clear } = useContext(cartContext);
 
     const [datos, setDatos] = useState({
         nombre: '',
@@ -59,6 +68,7 @@ export default function Cart() {
 
                     if(dataDoc.stock >= prodQuantity){
                         batch.update(doc.ref, {stock: dataDoc.stock - prodQuantity})
+                        clearCart()
                     }else{
                         outOfStock.push({id: doc.id, ...dataDoc})
                     }
@@ -74,8 +84,10 @@ export default function Cart() {
                 batch.commit()
                 console.log(`Numero de orden ${id}`)
                 
-                setBuy(true)
+                
                 setOrden(id)
+                clearCart()
+                setBuy(true)
 
             }).catch(err => {
                 console.log(err)
@@ -85,18 +97,18 @@ export default function Cart() {
     }
 
     if(loading) {
-        return <h1>Se esta generando su orden </h1>
+        return <ClipLoader color={'#a242e2'} size={100} css={override}/>
     }
    
     if(buy){
-        return <h1>{orden}</h1>
+        return <div className="msjExito"><p>Compra exitosa!</p> <p>Su numero de orden es {orden}</p></div>
     }
     if(cart.length === 0){
-       return <div><p>No hay productos en el carrito</p> <Link to="/">Ir a agregar productos</Link></div>
+       return <div  className="cartVacio"><p>No hay productos en el carrito</p> <Link to="/">Ir a agregar productos</Link></div>
     }
     return (
         <>
-            <h1>Mi Carrito</h1>
+            <h1 className="cartTitle">Mi Carrito</h1>
            
             <div className="cartContainer">
             
@@ -114,7 +126,7 @@ export default function Cart() {
                 <div className="subtotal">
                      <p>Subtotal: ${prod.price * prod.quantity}</p>
                 </div>
-                <div className="eliminar" onClick={() => clearCart(prod.id)}>Eliminar</div> 
+                <div className="eliminar" onClick={() => clearCart(prod.id)}>X</div> 
              </div>)}
              
 
@@ -129,7 +141,7 @@ export default function Cart() {
 
             :
             <div className="formUser">
-                <h1>Formulario</h1>
+                <p>Completa tus datos para finalizar la compra</p>
                 <form className="row">
                     <div>
                         <input type="text" placeholder="Nombre y apellido" className="form-control" onChange={handleInputChange} name="nombre"></input>
@@ -142,10 +154,6 @@ export default function Cart() {
                     </div>
                     <button onClick={popUp}>Continuar</button>
                 </form>
-                <ul>
-                    <li>{datos.nombre}</li>
-                    <li>{datos.apellido}</li>
-                </ul>
             </div>}
             </div>
             
