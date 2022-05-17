@@ -1,13 +1,38 @@
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import  cartContext  from "../../cartContextProvider/CartContextProvider";
 import { firestoreDb } from "../../services/firebase/idex";
 import { getDocs, writeBatch, query, where, collection, documentId, addDoc } from "firebase/firestore";
 import './cart.scss'
 
+
 export default function Cart() {
     const [loading, setLoading] = useState(false)
+    const [buy, setBuy] = useState(false)
+    const [orden, setOrden] = useState('')
     let {subtotal, cart, clearCart } = useContext(cartContext);
+
+    const [datos, setDatos] = useState({
+        nombre: '',
+        telefono: '',
+        email: ''
+    })
+    const [popup, setPopup] = useState(false)
+    const popUp = () => {
+        setPopup(true)
+    }
+
+    const handleInputChange = (event) => {
+        console.log(event.target.name)
+        console.log(event.target.value)
+        setDatos({
+            ...datos,
+            [event.target.name] : event.target.value,
+            [event.target.telefono] : event.target.value,
+            [event.target.email] : event.target.value
+        })
+        console.log(datos, "datos :D")
+    }
 
     const createOrder = () =>{
         setLoading(true)
@@ -15,9 +40,7 @@ export default function Cart() {
         const objOrder = {
             items: cart,
             buyer: {
-                name: 'nancy',
-                phone: '1234567890',
-                email: 'nancy@gmail.com'
+                ...datos
             },
             total: subtotal(),
             date: new Date()
@@ -50,14 +73,23 @@ export default function Cart() {
             }).then(({ id }) => {
                 batch.commit()
                 console.log(`Numero de orden ${id}`)
+                
+                setBuy(true)
+                setOrden(id)
+
             }).catch(err => {
                 console.log(err)
             }).finally(() => {
                 setLoading(false)
             })
     }
+
     if(loading) {
-        return <h1>Se esta generando su orden</h1>
+        return <h1>Se esta generando su orden </h1>
+    }
+   
+    if(buy){
+        return <h1>{orden}</h1>
     }
     if(cart.length === 0){
        return <div><p>No hay productos en el carrito</p> <Link to="/">Ir a agregar productos</Link></div>
@@ -65,31 +97,58 @@ export default function Cart() {
     return (
         <>
             <h1>Mi Carrito</h1>
+           
             <div className="cartContainer">
-                {
-                    cart.map(prod => <div className="cart" key={prod.id}>
-                                        <img src={prod.pictureUrl}/>
-                                        <div className="datailCart">
-                                            <p className="title">{prod.title}</p>
-                                            <p>${prod.price}</p>
-                                            <div className="quantity">
-                                                <p>Unidades: {prod.quantity}</p>
-                                            </div>
-                                        </div>
-                                       <div className="subtotal">
-                                            <p>Subtotal: ${prod.price * prod.quantity}</p>
-                                       </div>
-                                       <div className="eliminar" onClick={() => clearCart(prod.id)}>Eliminar</div> 
-                                    </div>)
-                }
-                <div className="total">
-                    <p>Total: ${subtotal()}</p>
-                </div> 
-                <div className="terminarCompra">
-                    <button onClick={() => createOrder()}>Finalizar Compra</button>
+            
+            {popup ?
+            <>
+                { cart.map(prod => <div className="cart" key={prod.id}>
+                 <img src={prod.pictureUrl}/>
+                 <div className="datailCart">
+                     <p className="title">{prod.title}</p>
+                     <p>${prod.price}</p>
+                     <div className="quantity">
+                         <p>Unidades: {prod.quantity}</p>
+                     </div>
+                 </div>
+                <div className="subtotal">
+                     <p>Subtotal: ${prod.price * prod.quantity}</p>
                 </div>
+                <div className="eliminar" onClick={() => clearCart(prod.id)}>Eliminar</div> 
+             </div>)}
+             
 
+            <div className="total">
+            <p>Total: ${subtotal()}</p>
+            </div> 
+
+            <div className="terminarCompra">
+            <button onClick={() => createOrder()}>Finalizar Compra</button>
             </div>
+            </>
+
+            :
+            <div className="formUser">
+                <h1>Formulario</h1>
+                <form className="row">
+                    <div>
+                        <input type="text" placeholder="Nombre y apellido" className="form-control" onChange={handleInputChange} name="nombre"></input>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Telefono" className="form-control" onChange={handleInputChange} name="telefono"></input>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Mail" className="form-control" onChange={handleInputChange} name="mail"></input>
+                    </div>
+                    <button onClick={popUp}>Continuar</button>
+                </form>
+                <ul>
+                    <li>{datos.nombre}</li>
+                    <li>{datos.apellido}</li>
+                </ul>
+            </div>}
+            </div>
+            
         </>
     );
 }

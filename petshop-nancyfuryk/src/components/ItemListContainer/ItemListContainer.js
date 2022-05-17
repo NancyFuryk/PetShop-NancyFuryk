@@ -4,6 +4,7 @@ import ItemList from "../ItemList/ItemList";
 import { getDocs, collection, query, where } from 'firebase/firestore'
 import { useParams } from "react-router-dom";
 import { firestoreDb } from "../../services/firebase/idex";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function ItemListContainer() {
   const [products, setProducts] = useState([]);
@@ -27,7 +28,7 @@ export default function ItemListContainer() {
   }, [categoryId])
 
  if(products.length === 0){
-   return <h1> No hay productos </h1>
+   return <ClipLoader color={'#a242e2'} size={100}/>
  }
 
     return (
