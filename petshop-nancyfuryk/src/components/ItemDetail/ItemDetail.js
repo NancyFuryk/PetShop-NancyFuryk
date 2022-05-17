@@ -30,7 +30,7 @@ export default function ItemDetail({ id, title, pictureUrl, description, price, 
                     <p className="title">{title}</p>
                     <p className="desc">{description}</p>
                     <p className="price">$ {price}</p>
-                   { isInCart(id) > 0 ?<div> <Link to='/cart'>Ir al carrito</Link> <button  onClick={() => clear()}>borrar</button></div>: <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>}
+                   { isInCart(id) > 0 ?<div className='cartDeatail'> <Link to='/cart'>Ir al carrito</Link> <button  onClick={() => clear()}>Borrar carrito</button></div>: <ItemCount initial={1} stock={5} onAdd={handleOnAdd}/>}
                    
                 </div>
             </li>      
